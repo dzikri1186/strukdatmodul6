@@ -1,0 +1,55 @@
+import java.util.*;
+
+// Definisikan class Graph
+class Graph {
+    private int vertices;
+    private List<List<Integer>> adjList;
+
+    public Graph(int vertices) {
+        this.vertices = vertices;
+        adjList = new ArrayList<>(vertices);
+        for (int i = 0; i < vertices; i++) {
+            adjList.add(new ArrayList<>());
+        }
+    }
+
+    public void addEdge(int u, int v) {
+        adjList.get(u).add(v);
+    }
+
+    // Definisikan fungsi BFS
+    public void bfs(int startNode) {
+        boolean[] visited = new boolean[vertices];
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(startNode);
+        visited[startNode] = true;
+
+        while (!queue.isEmpty()) {
+            int node = queue.poll();
+            System.out.print(node + " ");
+
+            List<Integer> neighbors = adjList.get(node);
+            for (int neighbor : neighbors) {
+                if (!visited[neighbor]) {
+                    queue.add(neighbor);
+                    visited[neighbor] = true;
+                }
+            }
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Membangun graph
+        Graph graph = new Graph(6);
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 3);
+        graph.addEdge(1, 4);
+        graph.addEdge(1, 2);
+        graph.addEdge(2, 5);
+
+        // Memanggil fungsi BFS dengan node awal 0
+        graph.bfs(0);
+    }
+}
